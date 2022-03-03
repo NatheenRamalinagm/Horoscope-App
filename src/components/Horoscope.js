@@ -12,20 +12,23 @@ function Horoscope() {
         email : ''
     });
     //reading values from api
-    const [read, setRead] = useState(() => {
-        // getting stored value
-        const saved = localStorage.getItem("Read Data");
-        const initialValue = JSON.parse(saved);
-        return initialValue || "";
-      });
+    const [read, setRead] = useState('');
 
       //handling card 
     const [showData, setShowData] = useState(false);
 
+    //read user data
+    const[readUser,setReaduser] = useState(() => {
+      // getting stored value
+      const saved = localStorage.getItem("User Data");
+      const initialValue = JSON.parse(saved);
+      return initialValue || "";
+    })
+
       //set value to local storage
     useEffect(()=>{
-        localStorage.setItem('Read Data',JSON.stringify(read))
-      },[read]);
+        localStorage.setItem('User Data',JSON.stringify(readUser))
+      },[readUser]);
 
    // Handling Inputs
     const changeText = (e)=>{
@@ -40,6 +43,7 @@ function Horoscope() {
             setRead(response.data);
             toast(`${user.name} horoscope is created.`)
             setShowData(true)  
+            setReaduser(user)
                
           });          
         }    
